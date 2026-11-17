@@ -1,0 +1,6 @@
+{%- comment -%}
+  Site-local hook called by al-folio's bib layout: show "Journal Volume, Pages" (e.g. "Phys. Rev. B 105, 094518").
+{%- endcomment -%}
+{%- if entry.type == 'article' and entry.volume -%}
+  {%- capture entrytype -%}<em>{{ entry.journal }}</em> {{ entry.volume }}{% if entry.pages %}, {{ entry.pages }}{% endif %}{%- endcapture -%}
+{%- endif -%}

@@ -1,0 +1,9 @@
+# Social links shown on the home page (in this order).
+# Supported keys: https://github.com/george-gca/jekyll-socials
+
+email: shengjie.huang.sh@gmail.com
+scholar_userid: JkT1DSUAAAAJ # Google Scholar
+# arxiv_id: huang_s_X # TODO: your arXiv author ID (arxiv.org/a/<id>), once you claim your papers on arXiv
+# orcid_id: 0000-0000-0000-0000 # TODO: your ORCID iD
+# github_username: shengjiehuang
+# cv_pdf: /assets/pdf/cv.pdf # TODO: add your CV as assets/pdf/cv.pdf, then uncomment

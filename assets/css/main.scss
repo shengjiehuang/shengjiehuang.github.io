@@ -1,0 +1,160 @@
+---
+# Site-local copy of al_folio_core's assets/css/main.scss with a color override block added at the end.
+# If an al-folio upgrade changes the theme's main.scss, copy its new @use list here and keep the block below.
+---
+@charset "utf-8";
+
+@use "sass:math";
+@use "sass:string";
+
+@use "variables" with (
+  $max-content-width: {{ site.max_width | default:  "930px" }}
+);
+
+@use "themes";
+@use "layout";
+
+@use "typography";
+@use "navbar";
+@use "footer";
+@use "blog";
+@use "publications";
+@use "components";
+@use "utilities";
+
+@use "tabs";
+@use "teachings";
+@use "typograms";
+
+/*******************************************************************************
+ * Site colors: "birch and clay" -- warm off-white paper, warm charcoal text,
+ * clay brown accent. Change the six values below to try other colors.
+ ******************************************************************************/
+
+$paper: #ffffff; // page background (white)
+$paper-dark: #f3f1ee; // footer and code background
+$text: #33302d; // body text (dark warm charcoal)
+$text-light: #6e6862; // secondary text (dates, descriptions)
+$link: #8a5a44; // links and accents (clay)
+$link-hover: #6b4433; // darker clay on hover
+
+:root {
+  --global-bg-color: #{$paper};
+  --global-card-bg-color: #{$paper};
+  --global-newsletter-bg-color: #{$paper};
+  --global-text-color: #{$text};
+  --global-text-color-light: #{$text-light};
+  --global-theme-color: #{$link};
+  --global-hover-color: #{$link-hover};
+  --global-code-bg-color: #{$paper-dark};
+  --global-footer-bg-color: #{$paper-dark};
+  --global-footer-text-color: #{$text-light};
+  --global-footer-link-color: #{$text};
+  --global-newsletter-text-color: #{$text};
+}
+
+// Dark mode: a warm dark brown-grey with a light clay accent.
+html[data-theme="dark"] {
+  --global-bg-color: #221f1c;
+  --global-card-bg-color: #2a2622;
+  --global-code-bg-color: #2e2a26;
+  --global-text-color: #e6dfd6;
+  --global-text-color-light: #a59c92;
+  --global-theme-color: #d9a98f;
+  --global-hover-color: #ecc7b3;
+  --global-hover-text-color: #221f1c;
+  --global-footer-bg-color: #2a2622;
+  --global-footer-text-color: #a59c92;
+  --global-footer-link-color: #e6dfd6;
+}
+
+/*******************************************************************************
+ * Typography: the computer's own system font (San Francisco on Mac, Segoe UI on
+ * Windows, Roboto on Android) at normal weight, like academicpages, instead of
+ * the theme's Roboto Light.
+ ******************************************************************************/
+
+$font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+body {
+  font-family: $font;
+  font-weight: 400;
+  font-size: 1.0625rem; // 17px
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $font;
+  font-weight: 600;
+}
+
+.post-title,
+.post-header h1 {
+  font-weight: 600;
+}
+
+.publications ol.bibliography li .title {
+  font-weight: 600;
+}
+
+.post-description {
+  font-size: 1rem;
+}
+
+.profile .more-info {
+  font-family: $font;
+  font-size: 0.95rem;
+  color: var(--global-text-color-light);
+}
+
+// The theme writes the home page's "news" heading in lowercase; capitalize it
+// to match the menu.
+.post article > h2 a {
+  text-transform: capitalize;
+}
+
+// Talks page: light grey year labels instead of the accent color.
+.publications.talks ol.bibliography li .abbr abbr {
+  background-color: #eeebe7;
+  color: #4a4642 !important; // the theme sets this color with !important
+}
+
+html[data-theme="dark"] .publications.talks ol.bibliography li .abbr abbr {
+  background-color: #3a3531;
+  color: #e6dfd6 !important;
+}
+
+// Profile photo: smaller than the theme default (30% of the page width).
+// On phones: centered above the text instead of floating beside it.
+@media (max-width: 575.98px) {
+  .profile.float-right,
+  .profile.float-left {
+    float: none !important;
+    width: 200px;
+    margin: 0 auto 1rem;
+  }
+}
+
+@media (min-width: 576px) {
+  .profile {
+    width: 22%;
+  }
+}
+
+// Keep the bio in its own column beside the photo instead of wrapping
+// underneath it (computers and tablets only; phones stack them).
+@media (min-width: 576px) {
+  .profile + .clearfix {
+    overflow: hidden;
+  }
+
+  .profile.float-right {
+    margin-left: 2rem;
+  }
+}

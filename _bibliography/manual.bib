@@ -1,0 +1,45 @@
+% Hand corrections for the automatic publication list (scripts/update_pubs.py).
+%
+% * An entry with  arxiv = {ID}  overrides just those fields of the paper fetched from arXiv.
+%   Use it when the journal reference on arXiv is missing or the published title differs.
+% * Add  skip = {true}  to such an entry to hide that paper.
+% * An entry without an arxiv field is added as-is (for papers that are not on arXiv).
+% * Add  selected = {true}  to show a paper under "selected publications" (enable it in _pages/about.md).
+%
+% Tip: once you add the journal reference and DOI on arXiv itself, the override is no longer needed.
+
+@article{override_2405_09611,
+  arxiv   = {2405.09611},
+  journal = {Phys. Rev. B},
+  volume  = {111},
+  pages   = {155130},
+  year    = {2025},
+  doi     = {10.1103/PhysRevB.111.155130}
+}
+
+@article{override_2211_03802,
+  arxiv   = {2211.03802},
+  journal = {Phys. Rev. B},
+  volume  = {110},
+  pages   = {035134},
+  year    = {2024},
+  doi     = {10.1103/PhysRevB.110.035134}
+}
+
+@article{override_2212_06197,
+  arxiv = {2212.06197},
+  title = {Hybrid-order topological superconductivity in a topological metal 1T′-MoTe₂}
+}
+
+@article{override_1806_04687,
+  arxiv      = {1806.04687},
+  author     = {Prem*, Abhinav and Huang*, Sheng-Jie and Song, Hao and Hermele, Michael},
+  annotation = {* Equal contribution}
+}
+
+@article{override_1705_09243,
+  arxiv      = {1705.09243},
+  author     = {Huang*, Sheng-Jie and Song*, Hao and Huang, Yi-Ping and Hermele, Michael},
+  annotation = {* Equal contribution},
+  award      = {Editors' Suggestion}
+}

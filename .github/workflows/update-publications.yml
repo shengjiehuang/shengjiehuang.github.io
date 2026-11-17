@@ -1,0 +1,54 @@
+name: Update publications
+
+# Rebuilds _bibliography/papers.bib from arXiv once a week (and on demand from the
+# Actions tab), commits it if anything changed, then redeploys the site.
+
+on:
+  schedule:
+    - cron: "17 6 * * 1" # Mondays 06:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-publications
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - name: Fetch papers from arXiv
+        run: python3 scripts/update_pubs.py
+      - name: Commit if changed
+        id: commit
+        run: |
+          if git diff --quiet -- _bibliography/papers.bib; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Publication list is up to date."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add _bibliography/papers.bib
+            git commit -m "Update publications from arXiv"
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  # A push made with the workflow's own token does not start other workflows,
+  # so call the deploy workflow directly when the list changed.
+  deploy:
+    needs: update
+    if: needs.update.outputs.changed == 'true'
+    uses: ./.github/workflows/deploy.yml
+    with:
+      ref: ${{ github.ref_name }}
+    permissions:
+      contents: write
