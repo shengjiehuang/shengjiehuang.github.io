@@ -158,3 +158,51 @@ html[data-theme="dark"] .publications.talks ol.bibliography li .abbr abbr {
     margin-left: 2rem;
   }
 }
+
+// Research page figures: float on the right of each section with the text
+// wrapping around them; the width is set per figure in _pages/research.md.
+// A white card keeps line drawings readable in dark mode. Click to zoom.
+.research-figure {
+  float: right;
+  margin: 0.25rem 0 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #ffffff;
+    border-radius: 6px;
+    padding: 0.4rem;
+    cursor: zoom-in;
+  }
+}
+
+// Each section and its paper list start below the previous figure.
+.research-figure ~ h4,
+.related-publications {
+  clear: both;
+}
+
+// On phones: no wrapping; the figure sits centered above the text.
+@media (max-width: 575.98px) {
+  .research-figure {
+    float: none;
+    width: auto !important;
+    max-width: 340px;
+    margin: 0.5rem auto 1.25rem;
+    flex-direction: row; // several images side by side
+    align-items: center;
+
+    img {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+  }
+}
+
+html[data-theme="dark"] .research-figure img {
+  border: 1px solid #3a3531;
+}
